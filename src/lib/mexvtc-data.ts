@@ -60,5 +60,7 @@ export const pricing = {
   berline: [
     ["Lyon → Lyon","35 €"],["Lyon → proche agglomération","50 €"],["Lyon → Saint-Exupéry","75 €"],["Lyon → Genève","390 €"],
   ],
-  availability: [["À l’heure","70 € / heure"],["Demi-journée","à partir de 320 €"],["Journée complète","à partir de 480 €"]],
+  van: [["Lyon → Lyon","55 €"],["Lyon → proche agglomération","75 €"],["Lyon → Saint-Exupéry","95 €"],["Lyon → Genève","440 €"]],
+  availability: [["À l’heure","70 € / heure"],["Demi-journée (4h30)","à partir de 320 €"],["Journée complète (8h30)","à partir de 480 €"]],
+  vanAvailability: [["À l’heure","80 € / heure"],["Demi-journée (4h30)","à partir de 370 €"],["Journée complète (8h30)","à partir de 570 €"]],
 };
