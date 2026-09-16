@@ -1,24 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowDown, ArrowRight, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SiteHeader, SiteFooter, MobileBar } from "@/components/mexvtc-shell";
+import { BookingWizard } from "@/components/booking-wizard";
+import { AirportJourney, DestinationMap, FaqBlock, FixedPrice, FleetShowcase, PricingBlock, SectionHeading, ServicesGrid, TrustStrip } from "@/components/mexvtc-sections";
+import { contact, faq } from "@/lib/mexvtc-data";
+import hero from "@/assets/mexvtc-hero.jpg";
+import corporate from "@/assets/mexvtc-corporate.jpg";
+import alps from "@/assets/mexvtc-alps.jpg";
+import wedding from "@/assets/mexvtc-wedding.jpg";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+ head:()=>({meta:[{title:"VTC Lyon | Chauffeur privé premium MEXVTC"},{name:"description",content:"Chauffeur privé à Lyon : transferts aéroport, business, longue distance et berline ou van Mercedes à tarif fixe."},{property:"og:title",content:"MEXVTC — Votre chauffeur privé à Lyon"},{property:"og:description",content:"Service VTC premium à Lyon, tarif fixe et réservation simple."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}],links:[{rel:"canonical",href:"/"}],scripts:[{type:"application/ld+json",children:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":["TaxiService","LocalBusiness"],name:"MEXVTC",telephone:contact.phone,email:contact.email,address:{"@type":"PostalAddress",streetAddress:"23 Boulevard de Lattre de Tassigny",postalCode:"69140",addressLocality:"Rillieux-la-Pape",addressCountry:"FR"},areaServed:["Lyon","Villeurbanne","Rhône-Alpes"],priceRange:"€€"},{"@type":"WebSite",name:"MEXVTC",url:"/"},{"@type":"FAQPage",mainEntity:faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}]})}]}), component:Home,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+function Home(){return <><SiteHeader overlay/><main><section className="hero"><img src={hero} alt="Mercedes noire avec chauffeur sur les quais de Lyon" width={1600} height={1000} fetchPriority="high"/><div className="hero-shade"/><div className="hero-content"><p className="hero-eyebrow">Chauffeur MEX VTC · Lyon</p><h1>Votre chauffeur<br/>privé à Lyon</h1><p className="hero-copy">Un service VTC premium, ponctuel et confortable pour vos transferts aéroport, déplacements professionnels et trajets longue distance.</p><div className="flex flex-wrap gap-3"><Button asChild variant="champagne" size="xl"><Link to="/reserver">Réserver mon trajet <ArrowRight/></Link></Button><Button asChild variant="heroGhost" size="xl"><a href={contact.phoneHref}><Phone/> Appeler</a></Button></div></div><a href="#reservation" className="scroll-cue" aria-label="Voir la réservation"><span>Découvrir</span><ArrowDown/></a></section><section id="reservation" className="relative z-10 mx-auto -mt-12 max-w-6xl px-5"><BookingWizard compact/></section><TrustStrip/><ServicesGrid/><FixedPrice/><AirportJourney/><DestinationMap/><FleetShowcase/><PricingBlock/><FeatureBand image={corporate} eyebrow="Solutions entreprises" title="La ponctualité devient une évidence." text="Rendez-vous, transferts de collaborateurs, aéroports et mise à disposition : un chauffeur professionnel suit le rythme de votre journée." to="/vtc-entreprise-lyon" cta="Réserver un chauffeur"/><FeatureBand image={alps} eyebrow="Transferts Alpes" title="La montagne, sans correspondance." text="Courchevel, La Plagne, Tignes, Val d’Isère et Val Thorens en véhicule privé depuis Lyon." to="/transfert-stations-ski-alpes" cta="Explorer les stations" reverse/><FeatureBand image={wedding} eyebrow="Mariages & événements" title="Une arrivée à la hauteur de l’occasion." text="Berline ou van avec chauffeur, programme personnalisé et coordination attentive de vos horaires." to="/vtc-mariage-lyon" cta="Demander un devis"/><TrustSection/><FaqBlock/></main><SiteFooter/><MobileBar/></>}
+function FeatureBand({image,eyebrow,title,text,to,cta,reverse=false}:{image:string;eyebrow:string;title:string;text:string;to:string;cta:string;reverse?:boolean}){return <section className="feature-band"><div className={`mx-auto grid max-w-7xl lg:grid-cols-2 ${reverse?"lg:[&>div:first-child]:order-2":""}`}><div className="relative min-h-[420px]"><img src={image} alt={title} loading="lazy" width={1600} height={1000} className="absolute inset-0 h-full w-full object-cover"/></div><div className="flex items-center bg-background px-6 py-14 lg:px-16"><div><SectionHeading eyebrow={eyebrow} title={title} text={text}/><Button asChild variant="outline" size="lg" className="mt-8"><Link to={to}>{cta}<ArrowRight/></Link></Button></div></div></div></section>}
+function TrustSection(){return <section className="section bg-primary text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[1fr_1fr] lg:px-8"><div><p className="eyebrow !text-primary-foreground/70">MEXVTC · Rillieux-la-Pape</p><h2 className="font-display text-4xl leading-tight md:text-5xl">Un service local.<br/>Une exigence professionnelle.</h2></div><div className="grid gap-5 sm:grid-cols-2">{["Chauffeurs titulaires de la carte professionnelle VTC","Tarif fixe communiqué avant votre départ","Berlines et vans Mercedes premium","Expérience des aéroports et longues distances"].map(x=><div className="border-t border-primary-foreground/25 pt-4 text-sm leading-6" key={x}>{x}</div>)}<address className="not-italic text-sm leading-6 sm:col-span-2">{contact.address}<br/><a href={contact.phoneHref}>{contact.phone}</a> · <a href={contact.emailHref}>{contact.email}</a></address></div></div></section>}
