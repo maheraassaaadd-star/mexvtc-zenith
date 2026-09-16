@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReserverRouteImport } from './routes/reserver'
+import { Route as TarifsRouteImport } from './routes/tarifs'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReserverRoute = ReserverRouteImport.update({
+  id: '/reserver',
+  path: '/reserver',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TarifsRoute = TarifsRouteImport.update({
+  id: '/tarifs',
+  path: '/tarifs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/reserver': typeof ReserverRoute
+  '/tarifs': typeof TarifsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/reserver': typeof ReserverRoute
+  '/tarifs': typeof TarifsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/reserver': typeof ReserverRoute
+  '/tarifs': typeof TarifsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/reserver' | '/tarifs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/reserver' | '/tarifs'
+  id: '__root__' | '/' | '/reserver' | '/tarifs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReserverRoute: typeof ReserverRoute
+  TarifsRoute: typeof TarifsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reserver': {
+      id: '/reserver'
+      path: '/reserver'
+      fullPath: '/reserver'
+      preLoaderRoute: typeof ReserverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tarifs': {
+      id: '/tarifs'
+      path: '/tarifs'
+      fullPath: '/tarifs'
+      preLoaderRoute: typeof TarifsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReserverRoute: ReserverRoute,
+  TarifsRoute: TarifsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
